@@ -1,777 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>201 Market Terminal</title>
 
   <style>
-    :root {
-      --bg: #030305;
-      --panel: rgba(255,255,255,.055);
-      --panel2: rgba(0,0,0,.38);
-      --border: rgba(255,255,255,.12);
-      --muted: #9da4b0;
-      --text: #fff;
-      --purple: #b983ff;
-      --gold: #d7a84f;
-      --green: #39d98a;
-      --red: #ff4d6d;
-      --blue: #5cc8ff;
-    }
-
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      width: 100vw;
-      height: 100vh;
-      color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top left, rgba(185,131,255,.18), transparent 34%),
-        radial-gradient(circle at top right, rgba(215,168,79,.12), transparent 32%),
-        linear-gradient(180deg, #101015 0%, #050506 58%, #000 100%);
+      background: #0b0b0f;
+      color: white;
+      text-align: center;
     }
 
-    .shell {
-      height: 100vh;
-      padding: 20px 28px 54px;
-      display: grid;
-      grid-template-rows: 72px 1fr 46px;
-      gap: 16px;
-    }
-
-    .topbar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      padding: 15px 22px;
-      border-radius: 22px;
-      background: rgba(0,0,0,.42);
-      border: 1px solid rgba(185,131,255,.22);
-      box-shadow: 0 0 50px rgba(185,131,255,.08);
-    }
-
-    .brand-title {
-      color: var(--purple);
-      font-size: 30px;
-      font-weight: 900;
+    h1 {
+      margin-top: 24px;
+      color: #b983ff;
       letter-spacing: 2px;
     }
 
-    .brand-subtitle {
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 15px;
-      letter-spacing: .5px;
+    .subtitle {
+      color: #9da4b0;
+      margin-top: -8px;
     }
 
-    .top-status {
+    .grid {
       display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .pill {
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.14);
-      font-size: 15px;
-      font-weight: 900;
-      min-width: 150px;
-      text-align: center;
-    }
-
-    .live {
-      color: var(--red);
-      background: rgba(255,77,109,.12);
-      border-color: rgba(255,77,109,.45);
-      min-width: 100px;
-    }
-
-    .main-grid {
-      min-height: 0;
-      display: grid;
-      grid-template-columns: 300px 1fr 330px;
-      gap: 16px;
-    }
-
-    .panel {
-      min-height: 0;
-      border-radius: 22px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      box-shadow: 0 0 40px rgba(0,0,0,.36);
-      overflow: hidden;
-    }
-
-    .side {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .panel-title {
-      color: var(--gold);
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      flex-wrap: wrap;
     }
 
     .card {
+      background: #151520;
+      padding: 24px;
       border-radius: 16px;
-      padding: 13px;
-      background: var(--panel2);
-      border: 1px solid rgba(255,255,255,.11);
+      width: 210px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 30px rgba(0,0,0,0.35);
     }
 
-    .label {
-      color: #8d96a3;
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 7px;
-    }
-
-    .value {
-      font-size: 23px;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-
-    .sub {
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.25;
-    }
-
-    .positive { color: var(--green); }
-    .negative { color: var(--red); }
-    .gold { color: var(--gold); }
-    .purple { color: var(--purple); }
-    .blue { color: var(--blue); }
-
-    .center {
-      padding: 18px;
-      display: grid;
-      grid-template-rows: auto 190px 1fr 118px;
-      gap: 14px;
-      border-color: rgba(185,131,255,.22);
-      box-shadow: 0 0 68px rgba(185,131,255,.10);
-    }
-
-    .center-head {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 16px;
-    }
-
-    .headline {
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .headline-sub {
-      color: var(--muted);
-      font-size: 15px;
-      margin-top: 5px;
-    }
-
-    .signal-box {
-      text-align: right;
-    }
-
-    .signal-label {
-      color: #8d96a3;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .signal-value {
-      margin-top: 4px;
-      font-size: 25px;
-      font-weight: 900;
-      color: var(--green);
-    }
-
-    .index-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .index-card {
-      border-radius: 20px;
-      padding: 16px;
-      text-align: center;
-      background: linear-gradient(135deg, rgba(185,131,255,.15), rgba(215,168,79,.07));
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: inset 0 0 36px rgba(0,0,0,.26);
-    }
-
-    .index-name {
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-    }
-
-    .index-price {
-      margin-top: 10px;
-      font-size: 38px;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .index-change {
-      margin-top: 8px;
-      font-size: 19px;
-      font-weight: 900;
-    }
-
-    .micro-chart {
-      height: 45px;
-      margin-top: 10px;
-      border-radius: 10px;
-      background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.055) 0px, rgba(255,255,255,.055) 1px, transparent 1px, transparent 15px),
-        linear-gradient(135deg, rgba(57,217,138,.16), transparent);
-      border: 1px solid rgba(255,255,255,.08);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .micro-chart:after {
-      content: "";
-      position: absolute;
-      left: -12%;
-      top: 48%;
-      width: 125%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold), var(--purple), transparent);
-      transform: rotate(-6deg);
-      opacity: .9;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 14px;
-      min-height: 0;
-    }
-
-    .table-panel {
-      padding: 14px;
-      border-radius: 20px;
-      background: rgba(0,0,0,.30);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow: hidden;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th {
-      color: #8d96a3;
-      text-align: left;
-      font-size: 11px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 7px 4px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
-
-    td {
-      padding: 8px 4px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      font-weight: 800;
-    }
-
-    .right-align { text-align: right; }
-
-    .sector-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 9px;
-      margin-top: 10px;
-    }
-
-    .sector {
-      padding: 10px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .sector-name {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .sector-change {
-      margin-top: 4px;
-      font-size: 19px;
-      font-weight: 900;
-    }
-
-    .bottom-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .metric {
-      padding: 13px;
-      border-radius: 16px;
-      text-align: center;
-      background: rgba(0,0,0,.32);
-      border: 1px solid rgba(215,168,79,.16);
-    }
-
-    .metric-label {
-      color: #8d96a3;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 7px;
-    }
-
-    .metric-value {
+    .symbol {
       font-size: 22px;
-      font-weight: 900;
+      font-weight: bold;
+      color: #aaa;
     }
 
-    .news-card {
-      border-left: 3px solid var(--gold);
+    .price {
+      font-size: 34px;
+      margin-top: 12px;
+      font-weight: bold;
     }
 
-    .ticker {
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      padding: 10px 16px;
-      font-size: 19px;
-      font-weight: 900;
-      color: var(--gold);
-      background: rgba(215,168,79,.08);
-      border: 1px solid rgba(215,168,79,.18);
-      white-space: nowrap;
-      overflow: hidden;
+    .change {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: bold;
     }
 
-    .ticker-track {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scrollTicker 70s linear infinite;
-    }
+    .positive { color: #39d98a; }
+    .negative { color: #ff4d6d; }
 
-    @keyframes scrollTicker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+    #status {
+      margin-top: 34px;
+      color: #888;
+      font-size: 16px;
     }
 
     .footer {
-      position: absolute;
-      bottom: 8px;
-      width: 100%;
-      text-align: center;
-      color: #7c828d;
+      margin-top: 30px;
+      color: #666;
       font-size: 13px;
     }
   </style>
 </head>
 
 <body>
-<div class="shell">
 
-  <div class="topbar">
-    <div>
-      <div class="brand-title">201 MARKET TERMINAL</div>
-      <div class="brand-subtitle">Live market dashboard • indices • megacap tech • sectors • macro • market intelligence</div>
-    </div>
-    <div class="top-status">
-      <div class="pill" id="lastUpdatedTop">Connecting...</div>
-      <div class="pill" id="sessionPill">Session</div>
-      <div class="pill live">LIVE</div>
-    </div>
+<h1>201 MARKET TERMINAL</h1>
+<div class="subtitle">Live market data from EC2 backend</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="symbol">SPY</div>
+    <div class="price" id="spyPrice">--</div>
+    <div class="change" id="spyChange">Loading</div>
   </div>
 
-  <div class="main-grid">
-
-    <div class="panel side">
-      <div class="panel-title">Macro Command Center</div>
-
-      <div class="card">
-        <div class="label">Market Tone</div>
-        <div class="value positive" id="marketTone">Risk-On</div>
-        <div class="sub" id="marketToneSub">Equities firm • volatility contained</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Volatility Watch</div>
-        <div class="value" id="vix">VIX 17.42</div>
-        <div class="sub">Below 20 suggests calmer risk conditions</div>
-      </div>
-
-      <div class="card">
-        <div class="label">10Y Treasury</div>
-        <div class="value gold" id="tenYear">4.28%</div>
-        <div class="sub">Rates drive valuation pressure</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Dollar Index</div>
-        <div class="value" id="dxy">DXY 105.10</div>
-        <div class="sub">Macro pressure gauge</div>
-      </div>
-
-      <div class="card news-card">
-        <div class="label">News Focus</div>
-        <div class="value" style="font-size:19px;" id="newsFocus">Fed • Earnings • Inflation</div>
-        <div class="sub">Primary market-moving themes</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Feed Status</div>
-        <div class="value blue">Local Sim Mode</div>
-        <div class="sub">Ready for real API integration later</div>
-      </div>
-    </div>
-
-    <div class="panel center">
-      <div class="center-head">
-        <div>
-          <div class="headline">LIVE MARKET INTELLIGENCE</div>
-          <div class="headline-sub">A clean second-screen dashboard for market hours: price action, leadership, sectors, macro, and alerts</div>
-        </div>
-        <div class="signal-box">
-          <div class="signal-label">Terminal Signal</div>
-          <div class="signal-value" id="terminalSignal">BULLISH BIAS</div>
-        </div>
-      </div>
-
-      <div class="index-grid">
-        <div class="index-card">
-          <div class="index-name">S&P 500</div>
-          <div class="index-price" id="spxPrice">5,214</div>
-          <div class="index-change positive" id="spxChange">+0.42%</div>
-          <div class="micro-chart"></div>
-        </div>
-
-        <div class="index-card">
-          <div class="index-name">NASDAQ</div>
-          <div class="index-price" id="nasdaqPrice">16,340</div>
-          <div class="index-change positive" id="nasdaqChange">+0.68%</div>
-          <div class="micro-chart"></div>
-        </div>
-
-        <div class="index-card">
-          <div class="index-name">DOW</div>
-          <div class="index-price" id="dowPrice">39,112</div>
-          <div class="index-change negative" id="dowChange">-0.12%</div>
-          <div class="micro-chart"></div>
-        </div>
-
-        <div class="index-card">
-          <div class="index-name">RUSSELL</div>
-          <div class="index-price" id="rutPrice">2,087</div>
-          <div class="index-change positive" id="rutChange">+0.21%</div>
-          <div class="micro-chart"></div>
-        </div>
-      </div>
-
-      <div class="dashboard-grid">
-        <div class="table-panel">
-          <div class="panel-title">Top Movers</div>
-          <table>
-            <thead>
-              <tr>
-                <th>Ticker</th>
-                <th>Name</th>
-                <th class="right-align">Move</th>
-                <th class="right-align">Signal</th>
-              </tr>
-            </thead>
-            <tbody id="moversTable">
-              <tr><td>NVDA</td><td>Nvidia</td><td class="right-align positive">+2.18%</td><td class="right-align">Momentum</td></tr>
-              <tr><td>TSLA</td><td>Tesla</td><td class="right-align positive">+1.44%</td><td class="right-align">High Beta</td></tr>
-              <tr><td>AAPL</td><td>Apple</td><td class="right-align positive">+0.62%</td><td class="right-align">Megacap</td></tr>
-              <tr><td>JPM</td><td>JPMorgan</td><td class="right-align negative">-0.38%</td><td class="right-align">Banks</td></tr>
-              <tr><td>AMZN</td><td>Amazon</td><td class="right-align positive">+0.81%</td><td class="right-align">Consumer</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-panel">
-          <div class="panel-title">Sector Performance</div>
-          <div class="sector-grid">
-            <div class="sector"><div class="sector-name">Technology</div><div class="sector-change positive" id="sectorTech">+0.74%</div></div>
-            <div class="sector"><div class="sector-name">Financials</div><div class="sector-change negative" id="sectorFin">-0.18%</div></div>
-            <div class="sector"><div class="sector-name">Energy</div><div class="sector-change positive" id="sectorEnergy">+0.39%</div></div>
-            <div class="sector"><div class="sector-name">Healthcare</div><div class="sector-change negative" id="sectorHealth">-0.11%</div></div>
-            <div class="sector"><div class="sector-name">Consumer</div><div class="sector-change positive" id="sectorConsumer">+0.28%</div></div>
-            <div class="sector"><div class="sector-name">Utilities</div><div class="sector-change negative" id="sectorUtilities">-0.33%</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottom-row">
-        <div class="metric">
-          <div class="metric-label">Market Breadth</div>
-          <div class="metric-value positive" id="breadth">Advancers Lead</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Momentum</div>
-          <div class="metric-value positive" id="momentum">Positive</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Leadership</div>
-          <div class="metric-value" id="leadership">Megacap Tech</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Refresh</div>
-          <div class="metric-value">15 sec</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel side">
-      <div class="panel-title">Watchlist + Alerts</div>
-
-      <div class="card">
-        <div class="label">AAPL</div>
-        <div class="value positive" id="aapl">+0.31%</div>
-        <div class="sub">Apple • megacap leadership</div>
-      </div>
-
-      <div class="card">
-        <div class="label">MSFT</div>
-        <div class="value positive" id="msft">+0.54%</div>
-        <div class="sub">Microsoft • AI/cloud leadership</div>
-      </div>
-
-      <div class="card">
-        <div class="label">NVDA</div>
-        <div class="value positive" id="nvda">+2.18%</div>
-        <div class="sub">Nvidia • momentum watch</div>
-      </div>
-
-      <div class="card">
-        <div class="label">TSLA</div>
-        <div class="value positive" id="tsla">+1.44%</div>
-        <div class="sub">Tesla • high-beta risk proxy</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Alert Desk</div>
-        <div class="value gold" style="font-size:19px;" id="alertDesk">SPX above key level</div>
-        <div class="sub" id="alertDeskSub">Monitoring index strength and sector rotation</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Market Note</div>
-        <div class="value" style="font-size:19px;" id="marketNote">Watch tech + rates</div>
-        <div class="sub">Best viewed during 9:30 AM – 4:00 PM ET</div>
-      </div>
-    </div>
-
+  <div class="card">
+    <div class="symbol">QQQ</div>
+    <div class="price" id="qqqPrice">--</div>
+    <div class="change" id="qqqChange">Loading</div>
   </div>
 
-  <div class="ticker">
-    <div class="ticker-track" id="ticker">201 MARKET TERMINAL | Dashboard initializing...</div>
+  <div class="card">
+    <div class="symbol">NVDA</div>
+    <div class="price" id="nvdaPrice">--</div>
+    <div class="change" id="nvdaChange">Loading</div>
   </div>
 </div>
 
+<div id="status">Connecting to backend...</div>
+
 <div class="footer">
-  Informational and educational purposes only | Not financial advice | Data currently simulated for dashboard testing | API integration planned
+  Informational and educational purposes only | Not financial advice
 </div>
 
 <script>
-  const REFRESH_MS = 15000;
+const API_URL = "http://54.147.143.148:8010/quotes";
 
-  const state = {
-    spx: 0.42,
-    nasdaq: 0.68,
-    dow: -0.12,
-    rut: 0.21,
-    aapl: 0.31,
-    msft: 0.54,
-    nvda: 2.18,
-    tsla: 1.44,
-    vix: 17.42,
-    tenYear: 4.28,
-    dxy: 105.10
-  };
+function setMove(id, value) {
+  const item = document.getElementById(id);
+  item.innerText = (value >= 0 ? "+" : "") + value.toFixed(2) + "%";
+  item.className = "change " + (value >= 0 ? "positive" : "negative");
+}
 
-  const headlines = [
-    "Fed • Earnings • Inflation",
-    "Megacap tech leadership in focus",
-    "Rates and dollar remain key macro drivers",
-    "Market breadth watched for confirmation",
-    "Volatility contained as risk appetite improves"
-  ];
+function setPrice(id, value) {
+  document.getElementById(id).innerText = "$" + Number(value).toFixed(2);
+}
 
-  const alerts = [
-    ["SPX above key level", "Monitoring index strength and sector rotation"],
-    ["Nasdaq leading tape", "Growth and AI-linked names showing strength"],
-    ["VIX below pressure zone", "Risk conditions remain relatively calm"],
-    ["Rates watch active", "10Y yield movement may affect valuations"],
-    ["Megacap tech in control", "AAPL, MSFT, NVDA remain important tells"]
-  ];
+async function loadData() {
+  const status = document.getElementById("status");
+  status.innerText = "Updating from EC2 backend...";
 
-  function el(id) {
-    return document.getElementById(id);
-  }
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
 
-  function setText(id, text) {
-    const item = el(id);
-    if (item) item.innerText = text;
-  }
-
-  function setMove(id, value) {
-    const item = el(id);
-    if (!item) return;
-
-    item.innerText = `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
-    item.classList.remove("positive", "negative");
-    item.classList.add(value >= 0 ? "positive" : "negative");
-  }
-
-  function randomWalk(key, spread) {
-    state[key] += (Math.random() * spread * 2) - spread;
-  }
-
-  function updateClock() {
-    const now = new Date();
-    setText("lastUpdatedTop", `Last update: ${now.toLocaleTimeString()}`);
-
-    const minutes = now.getHours() * 60 + now.getMinutes();
-    const open = 9 * 60 + 30;
-    const close = 16 * 60;
-
-    let session = "After Hours";
-    if (minutes < open) session = "Premarket";
-    if (minutes >= open && minutes <= close) session = "Market Open";
-
-    setText("sessionPill", session);
-  }
-
-  function updateSessionLogic() {
-    const avg = (state.spx + state.nasdaq + state.dow + state.rut) / 4;
-
-    if (avg > 0.25) {
-      setText("marketTone", "Risk-On");
-      setText("marketToneSub", "Equities firm • volatility contained");
-      setText("terminalSignal", "BULLISH BIAS");
-    } else if (avg < -0.25) {
-      setText("marketTone", "Risk-Off");
-      setText("marketToneSub", "Defensive tone • volatility watch active");
-      setText("terminalSignal", "DEFENSIVE");
-    } else {
-      setText("marketTone", "Mixed Tape");
-      setText("marketToneSub", "No clear directional leadership");
-      setText("terminalSignal", "NEUTRAL");
+    if (data.SPY) {
+      setPrice("spyPrice", data.SPY.price);
+      setMove("spyChange", data.SPY.changePercent);
     }
 
-    setText("breadth", avg >= 0 ? "Advancers Lead" : "Decliners Lead");
-    setText("momentum", avg >= 0 ? "Positive" : "Negative");
+    if (data.QQQ) {
+      setPrice("qqqPrice", data.QQQ.price);
+      setMove("qqqChange", data.QQQ.changePercent);
+    }
+
+    if (data.NVDA) {
+      setPrice("nvdaPrice", data.NVDA.price);
+      setMove("nvdaChange", data.NVDA.changePercent);
+    }
+
+    status.innerText = "Live Data | Last update: " + new Date().toLocaleTimeString();
+
+  } catch (error) {
+    console.error(error);
+    status.innerText = "Backend connection error";
   }
+}
 
-  function updateValues() {
-    randomWalk("spx", 0.12);
-    randomWalk("nasdaq", 0.15);
-    randomWalk("dow", 0.10);
-    randomWalk("rut", 0.14);
-
-    randomWalk("aapl", 0.18);
-    randomWalk("msft", 0.16);
-    randomWalk("nvda", 0.28);
-    randomWalk("tsla", 0.30);
-
-    state.vix += (Math.random() * 0.18) - 0.09;
-    state.tenYear += (Math.random() * 0.018) - 0.009;
-    state.dxy += (Math.random() * 0.08) - 0.04;
-
-    setMove("spxChange", state.spx);
-    setMove("nasdaqChange", state.nasdaq);
-    setMove("dowChange", state.dow);
-    setMove("rutChange", state.rut);
-
-    setMove("aapl", state.aapl);
-    setMove("msft", state.msft);
-    setMove("nvda", state.nvda);
-    setMove("tsla", state.tsla);
-
-    setText("vix", `VIX ${state.vix.toFixed(2)}`);
-    setText("tenYear", `${state.tenYear.toFixed(2)}%`);
-    setText("dxy", `DXY ${state.dxy.toFixed(2)}`);
-
-    setMove("sectorTech", state.nasdaq * 0.9);
-    setMove("sectorFin", state.dow * 0.6);
-    setMove("sectorEnergy", state.rut * 0.7);
-    setMove("sectorHealth", state.dow * 0.4);
-    setMove("sectorConsumer", state.spx * 0.6);
-    setMove("sectorUtilities", -state.nasdaq * 0.35);
-
-    updateSessionLogic();
-  }
-
-  function updateNarrative() {
-    const headline = headlines[Math.floor(Math.random() * headlines.length)];
-    const alert = alerts[Math.floor(Math.random() * alerts.length)];
-
-    setText("newsFocus", headline);
-    setText("alertDesk", alert[0]);
-    setText("alertDeskSub", alert[1]);
-
-    if (state.nvda > 1.5) setText("leadership", "AI / Semis");
-    else if (state.dow > state.nasdaq) setText("leadership", "Industrials");
-    else setText("leadership", "Megacap Tech");
-  }
-
-  function updateTicker() {
-    const now = new Date().toLocaleTimeString();
-
-    const tickerText =
-      `LIVE | S&P 500 ${state.spx >= 0 ? "+" : ""}${state.spx.toFixed(2)}%` +
-      `   •   NASDAQ ${state.nasdaq >= 0 ? "+" : ""}${state.nasdaq.toFixed(2)}%` +
-      `   •   DOW ${state.dow >= 0 ? "+" : ""}${state.dow.toFixed(2)}%` +
-      `   •   RUSSELL ${state.rut >= 0 ? "+" : ""}${state.rut.toFixed(2)}%` +
-      `   •   AAPL ${state.aapl >= 0 ? "+" : ""}${state.aapl.toFixed(2)}%` +
-      `   •   MSFT ${state.msft >= 0 ? "+" : ""}${state.msft.toFixed(2)}%` +
-      `   •   NVDA ${state.nvda >= 0 ? "+" : ""}${state.nvda.toFixed(2)}%` +
-      `   •   TSLA ${state.tsla >= 0 ? "+" : ""}${state.tsla.toFixed(2)}%` +
-      `   •   VIX ${state.vix.toFixed(2)}` +
-      `   •   10Y ${state.tenYear.toFixed(2)}%` +
-      `   •   Updated ${now}   •   201 MARKET TERMINAL`;
-
-    setText("ticker", tickerText);
-  }
-
-  function runUpdate() {
-    updateClock();
-    updateValues();
-    updateNarrative();
-    updateTicker();
-  }
-
-  runUpdate();
-  setInterval(runUpdate, REFRESH_MS);
+loadData();
+setInterval(loadData, 10000);
 </script>
+
 </body>
 </html>
