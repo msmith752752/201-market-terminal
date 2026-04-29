@@ -1,149 +1,499 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>201 Market Terminal</title>
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #0b0b0f;
-      color: white;
-      text-align: center;
+      background: radial-gradient(circle at top, #141827 0%, #080a10 55%, #030407 100%);
+      color: #f4f6fb;
     }
 
-    h1 {
-      margin-top: 24px;
-      color: #b983ff;
+    .page {
+      min-height: 100vh;
+      padding: 18px 28px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding-bottom: 14px;
+    }
+
+    .brandBlock {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .brand {
+      font-size: 30px;
+      font-weight: 900;
       letter-spacing: 2px;
     }
 
-    .subtitle {
+    .brand span { color: #8f7cff; }
+
+    .tagline {
+      margin-top: 6px;
       color: #9da4b0;
-      margin-top: -8px;
+      font-size: 14px;
+      letter-spacing: 1px;
     }
 
-    .grid {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 40px;
-      flex-wrap: wrap;
+    .statusBox {
+      text-align: right;
+      color: #9da4b0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .liveDot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      background: #39d98a;
+      border-radius: 50%;
+      margin-right: 7px;
+      box-shadow: 0 0 12px #39d98a;
+    }
+
+    .sectionTitle {
+      margin: 20px 0 10px;
+      color: #dce2f2;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .marketGrid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .futuresGrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .infoGrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    .wideGrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
     .card {
-      background: #151520;
-      padding: 24px;
+      background: rgba(18, 22, 35, 0.94);
+      border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px;
-      width: 210px;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 0 30px rgba(0,0,0,0.35);
+      padding: 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .pulseCard { min-height: 132px; }
+
+    .symbolRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
     }
 
     .symbol {
-      font-size: 22px;
-      font-weight: bold;
-      color: #aaa;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .label {
+      color: #8d95a8;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: right;
     }
 
     .price {
-      font-size: 34px;
-      margin-top: 12px;
-      font-weight: bold;
+      font-size: 30px;
+      margin-top: 14px;
+      font-weight: 900;
     }
 
     .change {
-      margin-top: 10px;
-      font-size: 22px;
-      font-weight: bold;
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: 900;
     }
 
     .positive { color: #39d98a; }
     .negative { color: #ff4d6d; }
+    .neutral { color: #c5cada; }
+    .muted { color: #858da1; }
 
-    #status {
-      margin-top: 34px;
-      color: #888;
-      font-size: 16px;
+    .panelTitle {
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
+    .lineItem {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+      color: #cbd1df;
+    }
+
+    .lineItem:last-child { border-bottom: none; }
+
+    .valueRight {
+      text-align: right;
+      color: #dfe5f4;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      color: #8d95a8;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    td {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: #dfe5f4;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
     .footer {
-      margin-top: 30px;
-      color: #666;
-      font-size: 13px;
+      position: fixed;
+      bottom: 10px;
+      left: 28px;
+      right: 28px;
+      display: flex;
+      justify-content: space-between;
+      color: #687083;
+      font-size: 12px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 10px;
+      background: rgba(3,4,7,0.8);
+    }
+
+    @media (max-width: 1200px) {
+      .marketGrid { grid-template-columns: repeat(3, 1fr); }
+      .futuresGrid { grid-template-columns: repeat(2, 1fr); }
+      .infoGrid, .wideGrid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
+  <div class="page">
 
-<h1>201 MARKET TERMINAL</h1>
-<div class="subtitle">Live market data from EC2 backend</div>
+    <div class="topbar">
+      <div class="brandBlock">
+        <img class="logo" src="201_Icon_2.png" alt="201 Market Terminal Logo" />
+        <div>
+          <div class="brand"><span>201</span> MARKET TERMINAL</div>
+          <div class="tagline">Market Pulse • Futures • Risk Board • Sector Strength</div>
+        </div>
+      </div>
 
-<div class="grid">
-  <div class="card">
-    <div class="symbol">SPY</div>
-    <div class="price" id="spyPrice">--</div>
-    <div class="change" id="spyChange">Loading</div>
+      <div class="statusBox">
+        <div><span class="liveDot"></span>LIVE MARKET DASHBOARD</div>
+        <div id="status">Connecting to local backend...</div>
+      </div>
+    </div>
+
+    <div class="sectionTitle">Market Pulse — What is the market doing right now?</div>
+
+    <div class="marketGrid">
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">SPY</div><div class="label">S&P 500</div></div><div class="price" id="spyPrice">--</div><div class="change neutral" id="spyChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">QQQ</div><div class="label">Nasdaq</div></div><div class="price" id="qqqPrice">--</div><div class="change neutral" id="qqqChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">DIA</div><div class="label">Dow</div></div><div class="price" id="diaPrice">--</div><div class="change neutral" id="diaChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">IWM</div><div class="label">Russell</div></div><div class="price" id="iwmPrice">--</div><div class="change neutral" id="iwmChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">VIX</div><div class="label">Volatility</div></div><div class="price" id="vixPrice">--</div><div class="change neutral" id="vixChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">10Y</div><div class="label">Treasury</div></div><div class="price" id="tnxPrice">--</div><div class="change neutral" id="tnxChange">Pending</div></div>
+    </div>
+
+    <div class="sectionTitle">Premarket Futures</div>
+
+    <div class="futuresGrid">
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">ES</div><div class="label">S&P Futures</div></div><div class="price" id="esPrice">--</div><div class="change neutral" id="esChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">NQ</div><div class="label">Nasdaq Futures</div></div><div class="price" id="nqPrice">--</div><div class="change neutral" id="nqChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">YM</div><div class="label">Dow Futures</div></div><div class="price" id="ymPrice">--</div><div class="change neutral" id="ymChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">RTY</div><div class="label">Russell Futures</div></div><div class="price" id="rtyPrice">--</div><div class="change neutral" id="rtyChange">Pending</div></div>
+    </div>
+
+    <div class="sectionTitle">Today’s Risk Board — What could move the market today?</div>
+
+    <div class="infoGrid">
+      <div class="card">
+        <div class="panelTitle">Volatility / Rates</div>
+        <div class="lineItem"><span>VIX Level</span><span class="valueRight" id="riskVix">Pending</span></div>
+        <div class="lineItem"><span>10-Year Yield</span><span class="valueRight" id="riskTnx">Pending</span></div>
+        <div class="lineItem"><span>Market Tone</span><span class="valueRight" id="marketTone">Pending</span></div>
+      </div>
+
+      <div class="card">
+        <div class="panelTitle">Biggest Movers</div>
+        <table>
+          <thead><tr><th>Symbol</th><th>Price</th><th>Move</th></tr></thead>
+          <tbody id="moversTable">
+            <tr><td colspan="3" class="muted">Loading movers...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="panelTitle">Sector Strength</div>
+        <div class="lineItem"><span>Leading Sector</span><span class="valueRight" id="leadingSector">Pending</span></div>
+        <div class="lineItem"><span>Weakest Sector</span><span class="valueRight" id="weakestSector">Pending</span></div>
+        <div class="lineItem"><span>Rotation Signal</span><span class="valueRight" id="rotationSignal">Pending</span></div>
+      </div>
+    </div>
+
+    <div class="sectionTitle">Sector Performance</div>
+
+    <div class="wideGrid">
+      <div class="card">
+        <div class="panelTitle">Top Sectors</div>
+        <table>
+          <thead><tr><th>Sector</th><th>ETF</th><th>Move</th></tr></thead>
+          <tbody id="topSectorsTable">
+            <tr><td colspan="3" class="muted">Loading sectors...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="panelTitle">Weakest Sectors</div>
+        <table>
+          <thead><tr><th>Sector</th><th>ETF</th><th>Move</th></tr></thead>
+          <tbody id="weakSectorsTable">
+            <tr><td colspan="3" class="muted">Loading sectors...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sectionTitle">Covered Call Ideas — Income opportunities</div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Current Price</th>
+            <th>Strike</th>
+            <th>Premium</th>
+            <th>Yield</th>
+            <th>Expiration</th>
+            <th>DTE</th>
+          </tr>
+        </thead>
+        <tbody id="coveredCallTable">
+          <tr>
+            <td colspan="7" class="muted">Covered call API panel ready — pending connection to existing API.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div>Informational and educational purposes only • Not financial advice</div>
+      <div>201 Market Terminal</div>
+    </div>
+
   </div>
-
-  <div class="card">
-    <div class="symbol">QQQ</div>
-    <div class="price" id="qqqPrice">--</div>
-    <div class="change" id="qqqChange">Loading</div>
-  </div>
-
-  <div class="card">
-    <div class="symbol">NVDA</div>
-    <div class="price" id="nvdaPrice">--</div>
-    <div class="change" id="nvdaChange">Loading</div>
-  </div>
-</div>
-
-<div id="status">Connecting to backend...</div>
-
-<div class="footer">
-  Informational and educational purposes only | Not financial advice
-</div>
 
 <script>
-const API_URL = "http://54.147.143.148:8010/quotes";
+const API_URL = "http://localhost:8010/dashboard";
 
-function setMove(id, value) {
-  const item = document.getElementById(id);
-  item.innerText = (value >= 0 ? "+" : "") + value.toFixed(2) + "%";
-  item.className = "change " + (value >= 0 ? "positive" : "negative");
+const MARKET_MAP = {
+  SPY: { price: "spyPrice", change: "spyChange" },
+  QQQ: { price: "qqqPrice", change: "qqqChange" },
+  DIA: { price: "diaPrice", change: "diaChange" },
+  IWM: { price: "iwmPrice", change: "iwmChange" },
+  VIX: { price: "vixPrice", change: "vixChange" },
+  TNX: { price: "tnxPrice", change: "tnxChange" }
+};
+
+const FUTURES_MAP = {
+  "S&P Futures": { price: "esPrice", change: "esChange" },
+  "Nasdaq Futures": { price: "nqPrice", change: "nqChange" },
+  "Dow Futures": { price: "ymPrice", change: "ymChange" },
+  "Russell Futures": { price: "rtyPrice", change: "rtyChange" }
+};
+
+function formatPrice(symbol, value) {
+  if (value === undefined || value === null || isNaN(value)) return "--";
+  if (symbol === "VIX") return Number(value).toFixed(2);
+  if (symbol === "TNX") return Number(value).toFixed(2) + "%";
+  return "$" + Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function setPrice(id, value) {
-  document.getElementById(id).innerText = "$" + Number(value).toFixed(2);
+function formatPlain(value) {
+  if (value === undefined || value === null || isNaN(value)) return "--";
+  return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function formatMove(value) {
+  if (value === undefined || value === null || isNaN(value)) return "--";
+  return (value >= 0 ? "+" : "") + Number(value).toFixed(2) + "%";
+}
+
+function moveClass(value) {
+  if (value === undefined || value === null || isNaN(value)) return "neutral";
+  return value >= 0 ? "positive" : "negative";
+}
+
+function setText(id, text, className = null) {
+  const item = document.getElementById(id);
+  if (!item) return;
+  item.innerText = text;
+  if (className) item.className = className;
+}
+
+function updateMarketPulse(marketPulse) {
+  Object.keys(MARKET_MAP).forEach(symbol => {
+    const quote = marketPulse[symbol];
+    if (!quote) return;
+
+    setText(MARKET_MAP[symbol].price, formatPrice(symbol, quote.price));
+    setText(MARKET_MAP[symbol].change, formatMove(quote.changePercent), "change " + moveClass(quote.changePercent));
+  });
+}
+
+function updateFutures(futures) {
+  Object.keys(FUTURES_MAP).forEach(name => {
+    const quote = futures[name];
+    if (!quote) return;
+
+    setText(FUTURES_MAP[name].price, formatPlain(quote.price));
+    setText(FUTURES_MAP[name].change, formatMove(quote.changePercent), "change " + moveClass(quote.changePercent));
+  });
+}
+
+function updateRiskBoard(marketPulse) {
+  const spy = marketPulse.SPY?.changePercent;
+  const qqq = marketPulse.QQQ?.changePercent;
+  const vix = marketPulse.VIX?.price;
+  const tnx = marketPulse.TNX?.price;
+
+  setText("riskVix", vix !== undefined ? Number(vix).toFixed(2) : "Pending");
+  setText("riskTnx", tnx !== undefined ? Number(tnx).toFixed(2) + "%" : "Pending");
+
+  let tone = "Mixed";
+  if (spy < 0 && qqq < 0) tone = "Risk-off";
+  if (spy > 0 && qqq > 0) tone = "Risk-on";
+
+  setText("marketTone", tone);
+}
+
+function updateMovers(movers) {
+  const table = document.getElementById("moversTable");
+  table.innerHTML = "";
+
+  movers.forEach(item => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item.symbol}</td>
+      <td>$${Number(item.price).toFixed(2)}</td>
+      <td class="${moveClass(item.changePercent)}">${formatMove(item.changePercent)}</td>
+    `;
+    table.appendChild(row);
+  });
+}
+
+function updateSectors(sectors) {
+  if (!sectors || sectors.length === 0) return;
+
+  const leader = sectors[0];
+  const weakest = sectors[sectors.length - 1];
+
+  setText("leadingSector", `${leader.sector} (${leader.etf}) ${formatMove(leader.changePercent)}`);
+  setText("weakestSector", `${weakest.sector} (${weakest.etf}) ${formatMove(weakest.changePercent)}`);
+
+  let rotation = "Mixed";
+  if (leader.sector === "Technology" || leader.sector === "Consumer Discretionary") rotation = "Growth-led";
+  if (leader.sector === "Energy" || leader.sector === "Utilities" || leader.sector === "Consumer Staples") rotation = "Defensive / value-led";
+
+  setText("rotationSignal", rotation);
+
+  const topTable = document.getElementById("topSectorsTable");
+  const weakTable = document.getElementById("weakSectorsTable");
+
+  topTable.innerHTML = "";
+  weakTable.innerHTML = "";
+
+  sectors.slice(0, 5).forEach(item => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${item.sector}</td><td>${item.etf}</td><td class="${moveClass(item.changePercent)}">${formatMove(item.changePercent)}</td>`;
+    topTable.appendChild(row);
+  });
+
+  sectors.slice(-5).reverse().forEach(item => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${item.sector}</td><td>${item.etf}</td><td class="${moveClass(item.changePercent)}">${formatMove(item.changePercent)}</td>`;
+    weakTable.appendChild(row);
+  });
 }
 
 async function loadData() {
   const status = document.getElementById("status");
-  status.innerText = "Updating from EC2 backend...";
+  status.innerText = "Updating...";
 
   try {
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    if (data.SPY) {
-      setPrice("spyPrice", data.SPY.price);
-      setMove("spyChange", data.SPY.changePercent);
-    }
+    updateMarketPulse(data.marketPulse || {});
+    updateFutures(data.futures || {});
+    updateRiskBoard(data.marketPulse || {});
+    updateMovers(data.biggestMovers || []);
+    updateSectors(data.sectorStrength || []);
 
-    if (data.QQQ) {
-      setPrice("qqqPrice", data.QQQ.price);
-      setMove("qqqChange", data.QQQ.changePercent);
-    }
-
-    if (data.NVDA) {
-      setPrice("nvdaPrice", data.NVDA.price);
-      setMove("nvdaChange", data.NVDA.changePercent);
-    }
-
-    status.innerText = "Live Data | Last update: " + new Date().toLocaleTimeString();
+    status.innerText = "Last update: " + new Date().toLocaleTimeString();
 
   } catch (error) {
     console.error(error);
