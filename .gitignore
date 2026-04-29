@@ -1,0 +1,11 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# media/images (optional)
+*.png
+*.jpg
+
+# system
+.DS_Store
+Thumbs.db
