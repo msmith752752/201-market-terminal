@@ -7,156 +7,285 @@
   <style>
     * { box-sizing: border-box; }
 
+    :root {
+      --bg: #05070d;
+      --panel: rgba(18, 22, 35, 0.94);
+      --panel2: rgba(11, 14, 24, 0.96);
+      --border: rgba(255,255,255,0.10);
+      --text: #f4f6fb;
+      --muted: #8d95a8;
+      --green: #39d98a;
+      --red: #ff4d6d;
+      --yellow: #ffd166;
+      --purple: #8f7cff;
+      --blue: #6ab7ff;
+    }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top, #141827 0%, #080a10 55%, #030407 100%);
-      color: #f4f6fb;
+      background: radial-gradient(circle at top, #171c2f 0%, #080a10 55%, #030407 100%);
+      color: var(--text);
+      overflow-x: hidden;
     }
 
     .page {
       min-height: 100vh;
-      padding: 18px 28px 60px;
+      padding: 16px 24px 58px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 18px;
       border-bottom: 1px solid rgba(255,255,255,0.12);
-      padding-bottom: 14px;
+      padding-bottom: 12px;
     }
 
     .brandBlock {
       display: flex;
       align-items: center;
       gap: 14px;
+      min-width: 390px;
     }
 
     .logo {
-      width: 54px;
-      height: 54px;
+      width: 58px;
+      height: 58px;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 12px;
+      box-shadow: 0 0 24px rgba(143,124,255,0.25);
     }
 
     .brand {
-      font-size: 30px;
+      font-size: 31px;
       font-weight: 900;
       letter-spacing: 2px;
+      line-height: 1;
     }
 
-    .brand span { color: #8f7cff; }
+    .brand span { color: var(--purple); }
 
     .tagline {
-      margin-top: 6px;
-      color: #9da4b0;
-      font-size: 14px;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
       letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .headlineStrip {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 660px;
+    }
+
+    .headlineBox {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 10px 12px;
+      min-height: 58px;
+    }
+
+    .headlineLabel {
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+    }
+
+    .headlineValue {
+      font-size: 15px;
+      font-weight: 900;
+      color: #fff;
     }
 
     .statusBox {
       text-align: right;
-      color: #9da4b0;
-      font-size: 14px;
-      line-height: 1.6;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      min-width: 220px;
     }
 
     .liveDot {
       display: inline-block;
       width: 9px;
       height: 9px;
-      background: #39d98a;
+      background: var(--green);
       border-radius: 50%;
       margin-right: 7px;
-      box-shadow: 0 0 12px #39d98a;
+      box-shadow: 0 0 12px var(--green);
     }
 
+    .liveHeadline {
+      margin: 13px 0 14px;
+      padding: 13px 18px;
+      border: 1px solid rgba(143,124,255,0.35);
+      border-radius: 16px;
+      background: linear-gradient(90deg, rgba(143,124,255,0.22), rgba(57,217,138,0.07), rgba(18,22,35,0.92));
+      box-shadow: 0 18px 38px rgba(0,0,0,0.34);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .liveHeadlineLabel {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: #aeb7d4;
+      white-space: nowrap;
+    }
+
+    .liveHeadlineText {
+      flex: 1;
+      font-size: 23px;
+      font-weight: 950;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .liveHeadlinePulse {
+      width: 10px;
+      height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 14px var(--green);
+      flex: 0 0 auto;
+    }
+
+
     .sectionTitle {
-      margin: 20px 0 10px;
+      margin: 17px 0 9px;
       color: #dce2f2;
-      font-size: 15px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 900;
       letter-spacing: 1.5px;
       text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sectionNote {
+      color: #687083;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
     }
 
     .marketGrid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 11px;
     }
 
     .futuresGrid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      gap: 11px;
     }
 
     .infoGrid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 14px;
+      grid-template-columns: 1.05fr 1.1fr 1.05fr;
+      gap: 12px;
     }
 
     .wideGrid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
     }
 
     .card {
-      background: rgba(18, 22, 35, 0.94);
-      border: 1px solid rgba(255,255,255,0.10);
+      background: var(--panel);
+      border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      padding: 14px;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.36);
     }
 
-    .pulseCard { min-height: 132px; }
+    .pulseCard {
+      min-height: 124px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pulseCard::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -38px auto;
+      width: 92px;
+      height: 92px;
+      background: rgba(143,124,255,0.08);
+      border-radius: 999px;
+    }
 
     .symbolRow {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 8px;
+      position: relative;
+      z-index: 1;
     }
 
     .symbol {
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 900;
       letter-spacing: 1px;
     }
 
     .label {
-      color: #8d95a8;
+      color: var(--muted);
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 1px;
       text-align: right;
+      line-height: 1.25;
     }
 
     .price {
-      font-size: 30px;
-      margin-top: 14px;
+      font-size: 28px;
+      margin-top: 13px;
       font-weight: 900;
+      position: relative;
+      z-index: 1;
     }
 
     .change {
       margin-top: 8px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
+      position: relative;
+      z-index: 1;
     }
 
-    .positive { color: #39d98a; }
-    .negative { color: #ff4d6d; }
+    .positive { color: var(--green); }
+    .negative { color: var(--red); }
     .neutral { color: #c5cada; }
+    .warning { color: var(--yellow); }
     .muted { color: #858da1; }
 
     .panelTitle {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 900;
-      margin-bottom: 10px;
+      margin-bottom: 9px;
       color: #ffffff;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -165,6 +294,7 @@
     .lineItem {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
       padding: 8px 0;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -177,19 +307,29 @@
     .valueRight {
       text-align: right;
       color: #dfe5f4;
-      font-weight: 700;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px;
+      font-weight: 900;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     th {
       text-align: left;
-      color: #8d95a8;
-      font-size: 12px;
+      color: var(--muted);
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 1px;
       padding-bottom: 8px;
@@ -197,31 +337,58 @@
     }
 
     td {
-      padding: 8px 0;
+      padding: 7px 0;
       border-bottom: 1px solid rgba(255,255,255,0.07);
       color: #dfe5f4;
+      font-weight: 700;
     }
 
     tr:last-child td { border-bottom: none; }
 
+    .commentaryBox {
+      min-height: 118px;
+      background: linear-gradient(135deg, rgba(143,124,255,0.13), rgba(57,217,138,0.06));
+    }
+
+    .commentaryMain {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .commentarySub {
+      color: #b8bfce;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
     .footer {
       position: fixed;
-      bottom: 10px;
-      left: 28px;
-      right: 28px;
+      bottom: 8px;
+      left: 24px;
+      right: 24px;
       display: flex;
       justify-content: space-between;
+      gap: 16px;
       color: #687083;
       font-size: 12px;
       border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 10px;
-      background: rgba(3,4,7,0.8);
+      padding-top: 9px;
+      background: rgba(3,4,7,0.88);
+      backdrop-filter: blur(8px);
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
+      .marketGrid { grid-template-columns: repeat(4, 1fr); }
+      .headlineStrip { display: none; }
+    }
+
+    @media (max-width: 1100px) {
       .marketGrid { grid-template-columns: repeat(3, 1fr); }
       .futuresGrid { grid-template-columns: repeat(2, 1fr); }
       .infoGrid, .wideGrid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; }
     }
   </style>
 </head>
@@ -234,17 +401,43 @@
         <img class="logo" src="201_Icon_2.png" alt="201 Market Terminal Logo" />
         <div>
           <div class="brand"><span>201</span> MARKET TERMINAL</div>
-          <div class="tagline">Market Pulse • Futures • Risk Board • Sector Strength</div>
+          <div class="tagline">Live Market Pulse • Futures • Risk • Sectors • Income Watch</div>
+        </div>
+      </div>
+
+      <div class="headlineStrip">
+        <div class="headlineBox">
+          <div class="headlineLabel">Market Tone</div>
+          <div class="headlineValue" id="topTone">Pending</div>
+        </div>
+        <div class="headlineBox">
+          <div class="headlineLabel">Rotation</div>
+          <div class="headlineValue" id="topRotation">Pending</div>
+        </div>
+        <div class="headlineBox">
+          <div class="headlineLabel">Risk Level</div>
+          <div class="headlineValue" id="topRisk">Pending</div>
         </div>
       </div>
 
       <div class="statusBox">
         <div><span class="liveDot"></span>LIVE MARKET DASHBOARD</div>
         <div id="status">Connecting to local backend...</div>
+        <div id="clock">--</div>
       </div>
     </div>
 
-    <div class="sectionTitle">Market Pulse — What is the market doing right now?</div>
+    <div class="liveHeadline">
+      <div class="liveHeadlineLabel">Live Tape Read</div>
+      <div class="liveHeadlineText" id="liveHeadline">LOADING MARKET SIGNALS...</div>
+      <div class="liveHeadlinePulse"></div>
+    </div>
+
+
+    <div class="sectionTitle">
+      <span>Market Pulse</span>
+      <span class="sectionNote">Core ETFs + volatility + rates + NVDA watch</span>
+    </div>
 
     <div class="marketGrid">
       <div class="card pulseCard"><div class="symbolRow"><div class="symbol">SPY</div><div class="label">S&P 500</div></div><div class="price" id="spyPrice">--</div><div class="change neutral" id="spyChange">Pending</div></div>
@@ -253,9 +446,13 @@
       <div class="card pulseCard"><div class="symbolRow"><div class="symbol">IWM</div><div class="label">Russell</div></div><div class="price" id="iwmPrice">--</div><div class="change neutral" id="iwmChange">Pending</div></div>
       <div class="card pulseCard"><div class="symbolRow"><div class="symbol">VIX</div><div class="label">Volatility</div></div><div class="price" id="vixPrice">--</div><div class="change neutral" id="vixChange">Pending</div></div>
       <div class="card pulseCard"><div class="symbolRow"><div class="symbol">10Y</div><div class="label">Treasury</div></div><div class="price" id="tnxPrice">--</div><div class="change neutral" id="tnxChange">Pending</div></div>
+      <div class="card pulseCard"><div class="symbolRow"><div class="symbol">NVDA</div><div class="label">AI Leader</div></div><div class="price" id="nvdaPrice">--</div><div class="change neutral" id="nvdaChange">Pending</div></div>
     </div>
 
-    <div class="sectionTitle">Premarket Futures</div>
+    <div class="sectionTitle">
+      <span>Premarket Futures</span>
+      <span class="sectionNote">ES • NQ • YM • RTY</span>
+    </div>
 
     <div class="futuresGrid">
       <div class="card pulseCard"><div class="symbolRow"><div class="symbol">ES</div><div class="label">S&P Futures</div></div><div class="price" id="esPrice">--</div><div class="change neutral" id="esChange">Pending</div></div>
@@ -264,7 +461,7 @@
       <div class="card pulseCard"><div class="symbolRow"><div class="symbol">RTY</div><div class="label">Russell Futures</div></div><div class="price" id="rtyPrice">--</div><div class="change neutral" id="rtyChange">Pending</div></div>
     </div>
 
-    <div class="sectionTitle">Today’s Risk Board — What could move the market today?</div>
+    <div class="sectionTitle">Today’s Risk Board</div>
 
     <div class="infoGrid">
       <div class="card">
@@ -272,6 +469,7 @@
         <div class="lineItem"><span>VIX Level</span><span class="valueRight" id="riskVix">Pending</span></div>
         <div class="lineItem"><span>10-Year Yield</span><span class="valueRight" id="riskTnx">Pending</span></div>
         <div class="lineItem"><span>Market Tone</span><span class="valueRight" id="marketTone">Pending</span></div>
+        <div class="lineItem"><span>Risk Read</span><span class="valueRight" id="riskRead">Pending</span></div>
       </div>
 
       <div class="card">
@@ -284,11 +482,10 @@
         </table>
       </div>
 
-      <div class="card">
-        <div class="panelTitle">Sector Strength</div>
-        <div class="lineItem"><span>Leading Sector</span><span class="valueRight" id="leadingSector">Pending</span></div>
-        <div class="lineItem"><span>Weakest Sector</span><span class="valueRight" id="weakestSector">Pending</span></div>
-        <div class="lineItem"><span>Rotation Signal</span><span class="valueRight" id="rotationSignal">Pending</span></div>
+      <div class="card commentaryBox">
+        <div class="panelTitle">Auto Market Read</div>
+        <div class="commentaryMain" id="commentaryMain">Waiting for live data...</div>
+        <div class="commentarySub" id="commentarySub">The terminal will summarize tone, risk, and sector rotation after the next backend update.</div>
       </div>
     </div>
 
@@ -316,7 +513,7 @@
       </div>
     </div>
 
-    <div class="sectionTitle">Covered Call Ideas — Income opportunities</div>
+    <div class="sectionTitle">Covered Call Ideas — Income Opportunities</div>
 
     <div class="card">
       <table>
@@ -333,7 +530,7 @@
         </thead>
         <tbody id="coveredCallTable">
           <tr>
-            <td colspan="7" class="muted">Covered call API panel ready — pending connection to existing API.</td>
+            <td colspan="7" class="muted">Loading live covered call opportunities...</td>
           </tr>
         </tbody>
       </table>
@@ -341,7 +538,7 @@
 
     <div class="footer">
       <div>Informational and educational purposes only • Not financial advice</div>
-      <div>201 Market Terminal</div>
+      <div>201 Market Terminal • Local backend: http://localhost:8010/dashboard</div>
     </div>
 
   </div>
@@ -355,7 +552,8 @@ const MARKET_MAP = {
   DIA: { price: "diaPrice", change: "diaChange" },
   IWM: { price: "iwmPrice", change: "iwmChange" },
   VIX: { price: "vixPrice", change: "vixChange" },
-  TNX: { price: "tnxPrice", change: "tnxChange" }
+  TNX: { price: "tnxPrice", change: "tnxChange" },
+  NVDA: { price: "nvdaPrice", change: "nvdaChange" }
 };
 
 const FUTURES_MAP = {
@@ -364,6 +562,9 @@ const FUTURES_MAP = {
   "Dow Futures": { price: "ymPrice", change: "ymChange" },
   "Russell Futures": { price: "rtyPrice", change: "rtyChange" }
 };
+
+let latestRotation = "Pending";
+let latestRisk = "Pending";
 
 function formatPrice(symbol, value) {
   if (value === undefined || value === null || isNaN(value)) return "--";
@@ -394,6 +595,19 @@ function setText(id, text, className = null) {
   if (className) item.className = className;
 }
 
+function updateClock() {
+  const clock = document.getElementById("clock");
+  if (!clock) return;
+  clock.innerText = new Date().toLocaleString([], {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+}
+
 function updateMarketPulse(marketPulse) {
   Object.keys(MARKET_MAP).forEach(symbol => {
     const quote = marketPulse[symbol];
@@ -414,25 +628,51 @@ function updateFutures(futures) {
   });
 }
 
+function getTone(spy, qqq, iwm, vixChange) {
+  if (spy > 0.25 && qqq > 0.25 && iwm > 0) return "Risk-on";
+  if (spy < -0.25 && qqq < -0.25 && iwm < 0) return "Risk-off";
+  if (qqq > spy && qqq > 0) return "Growth-led";
+  if (spy > 0 && qqq < 0) return "Mixed / defensive";
+  if (vixChange > 3 && spy < 0) return "Volatility rising";
+  return "Mixed";
+}
+
+function getRiskRead(vix, tnx, spy) {
+  if (vix >= 25) return "Elevated";
+  if (vix >= 20) return "Watch";
+  if (spy < -1.0) return "Pressure";
+  if (tnx >= 5.0) return "Rates high";
+  return "Normal";
+}
+
 function updateRiskBoard(marketPulse) {
-  const spy = marketPulse.SPY?.changePercent;
-  const qqq = marketPulse.QQQ?.changePercent;
+  const spy = marketPulse.SPY?.changePercent ?? 0;
+  const qqq = marketPulse.QQQ?.changePercent ?? 0;
+  const iwm = marketPulse.IWM?.changePercent ?? 0;
   const vix = marketPulse.VIX?.price;
+  const vixChange = marketPulse.VIX?.changePercent ?? 0;
   const tnx = marketPulse.TNX?.price;
+
+  const tone = getTone(spy, qqq, iwm, vixChange);
+  latestRisk = getRiskRead(vix, tnx, spy);
 
   setText("riskVix", vix !== undefined ? Number(vix).toFixed(2) : "Pending");
   setText("riskTnx", tnx !== undefined ? Number(tnx).toFixed(2) + "%" : "Pending");
-
-  let tone = "Mixed";
-  if (spy < 0 && qqq < 0) tone = "Risk-off";
-  if (spy > 0 && qqq > 0) tone = "Risk-on";
-
   setText("marketTone", tone);
+  setText("topTone", tone);
+  setText("riskRead", latestRisk);
+  setText("topRisk", latestRisk);
 }
 
 function updateMovers(movers) {
   const table = document.getElementById("moversTable");
+  if (!table) return;
   table.innerHTML = "";
+
+  if (!movers || movers.length === 0) {
+    table.innerHTML = `<tr><td colspan="3" class="muted">No mover data returned.</td></tr>`;
+    return;
+  }
 
   movers.forEach(item => {
     const row = document.createElement("tr");
@@ -451,14 +691,15 @@ function updateSectors(sectors) {
   const leader = sectors[0];
   const weakest = sectors[sectors.length - 1];
 
-  setText("leadingSector", `${leader.sector} (${leader.etf}) ${formatMove(leader.changePercent)}`);
-  setText("weakestSector", `${weakest.sector} (${weakest.etf}) ${formatMove(weakest.changePercent)}`);
+  if (leader.sector === "Technology" || leader.sector === "Consumer Discretionary" || leader.sector === "Communication Services") {
+    latestRotation = "Growth-led";
+  } else if (leader.sector === "Energy" || leader.sector === "Utilities" || leader.sector === "Consumer Staples" || leader.sector === "Health Care") {
+    latestRotation = "Defensive / value-led";
+  } else {
+    latestRotation = "Balanced";
+  }
 
-  let rotation = "Mixed";
-  if (leader.sector === "Technology" || leader.sector === "Consumer Discretionary") rotation = "Growth-led";
-  if (leader.sector === "Energy" || leader.sector === "Utilities" || leader.sector === "Consumer Staples") rotation = "Defensive / value-led";
-
-  setText("rotationSignal", rotation);
+  setText("topRotation", latestRotation);
 
   const topTable = document.getElementById("topSectorsTable");
   const weakTable = document.getElementById("weakSectorsTable");
@@ -477,6 +718,48 @@ function updateSectors(sectors) {
     row.innerHTML = `<td>${item.sector}</td><td>${item.etf}</td><td class="${moveClass(item.changePercent)}">${formatMove(item.changePercent)}</td>`;
     weakTable.appendChild(row);
   });
+
+  updateCommentary(leader, weakest);
+}
+
+
+function updateLiveHeadline(marketPulse, sectors) {
+  const headline = document.getElementById("liveHeadline");
+  if (!headline) return;
+
+  const spy = marketPulse.SPY?.changePercent ?? 0;
+  const qqq = marketPulse.QQQ?.changePercent ?? 0;
+  const vixChange = marketPulse.VIX?.changePercent ?? 0;
+  const leader = sectors && sectors.length ? sectors[0] : null;
+  const weakest = sectors && sectors.length ? sectors[sectors.length - 1] : null;
+
+  let tape = "MIXED TAPE";
+  if (spy < -0.25 && qqq < -0.25) tape = "RISK-OFF TAPE";
+  if (spy > 0.25 && qqq > 0.25) tape = "RISK-ON TAPE";
+  if (qqq < spy && qqq < 0) tape = "TECH UNDER PRESSURE";
+  if (qqq > spy && qqq > 0) tape = "GROWTH BID BUILDING";
+
+  let volatility = "VIX STEADY";
+  if (vixChange > 1.0) volatility = "VIX RISING";
+  if (vixChange > 3.0) volatility = "VIX SPIKING";
+  if (vixChange < -1.0) volatility = "VOLATILITY EASING";
+
+  const leaderText = leader ? `${leader.sector.toUpperCase()} OUTPERFORMING` : "SECTOR DATA LOADING";
+  const weakText = weakest ? `${weakest.sector.toUpperCase()} LAGGING` : "WEAKNESS DATA LOADING";
+
+  headline.innerText = `${tape} • ${leaderText} • ${weakText} • ${volatility}`;
+}
+
+function updateCommentary(leader, weakest) {
+  const tone = document.getElementById("marketTone")?.innerText || "Mixed";
+  const main = document.getElementById("commentaryMain");
+  const sub = document.getElementById("commentarySub");
+
+  if (!main || !sub || !leader || !weakest) return;
+
+  main.innerText = `${tone} tape with ${leader.sector} leading.`;
+
+  sub.innerText = `${leader.etf} is the strongest sector ETF at ${formatMove(leader.changePercent)}, while ${weakest.etf} is weakest at ${formatMove(weakest.changePercent)}. Risk read: ${latestRisk}. Rotation signal: ${latestRotation}.`;
 }
 
 async function loadData() {
@@ -485,6 +768,8 @@ async function loadData() {
 
   try {
     const response = await fetch(API_URL);
+    if (!response.ok) throw new Error("Backend returned " + response.status);
+
     const data = await response.json();
 
     updateMarketPulse(data.marketPulse || {});
@@ -492,8 +777,9 @@ async function loadData() {
     updateRiskBoard(data.marketPulse || {});
     updateMovers(data.biggestMovers || []);
     updateSectors(data.sectorStrength || []);
+    updateLiveHeadline(data.marketPulse || {}, data.sectorStrength || []);
 
-    status.innerText = "Last update: " + new Date().toLocaleTimeString();
+    status.innerText = "Last market update: " + new Date().toLocaleTimeString();
 
   } catch (error) {
     console.error(error);
@@ -501,8 +787,69 @@ async function loadData() {
   }
 }
 
+
+
+// COVERED CALL INTEGRATION
+const COVERED_CALL_API = "http://54.147.143.148:8000/covered-call";
+const COVERED_SYMBOLS = ["AAPL", "NVDA", "MSFT"];
+
+function formatDollar(value) {
+  if (value === undefined || value === null || isNaN(value)) return "--";
+  return "$" + Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+async function loadCoveredCalls() {
+  const table = document.getElementById("coveredCallTable");
+  if (!table) return;
+
+  table.innerHTML = `<tr><td colspan="7" class="muted">Loading live covered call opportunities...</td></tr>`;
+
+  const rows = [];
+
+  for (const symbol of COVERED_SYMBOLS) {
+    try {
+      const response = await fetch(`${COVERED_CALL_API}?symbol=${encodeURIComponent(symbol)}`);
+      if (!response.ok) throw new Error(`Covered call API returned ${response.status}`);
+
+      const data = await response.json();
+      const best = data.best || (data.options && data.options[0]);
+      if (!best) continue;
+
+      rows.push(`
+        <tr>
+          <td>${data.symbol || symbol}</td>
+          <td>${formatDollar(data.price)}</td>
+          <td>${Number(best.strike).toFixed(2)}</td>
+          <td>${formatDollar(best.premium)}</td>
+          <td class="positive">${Number(best.yield).toFixed(2)}%</td>
+          <td>${best.expiration}</td>
+          <td>${best.dte}</td>
+        </tr>
+      `);
+    } catch (error) {
+      console.error("Covered call error:", symbol, error);
+      rows.push(`
+        <tr>
+          <td>${symbol}</td>
+          <td colspan="6" class="muted">Covered call data unavailable</td>
+        </tr>
+      `);
+    }
+  }
+
+  table.innerHTML = rows.length
+    ? rows.join("")
+    : `<tr><td colspan="7" class="muted">No covered call data available.</td></tr>`;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
 loadData();
 setInterval(loadData, 10000);
+
+loadCoveredCalls();
+setInterval(loadCoveredCalls, 30000);
 </script>
 
 </body>
